@@ -1,0 +1,647 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{D\_PS2}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+\begin{document}
+	
+	\begin{titlepage}
+		\begin{center}
+			\hspace{0pt}
+			\vfill
+			
+			\textbf{\LARGE{Development}}
+			
+			\vspace{0.5cm}
+			\large{Problem Set 2 \\
+				7th Feb., 2019}
+			
+			\vspace{0.5cm}
+			
+			\textbf{\large{Boyao Zhang}}
+			
+			
+			\vfill
+			
+			%\includegraphics[width=0.4\textwidth]{university}
+			
+		\end{center}
+	\end{titlepage}
+	
+	
+	\section*{Praying for Rain: The Welfare Cost of Seasons}
+	\subsection*{Deterministic seasonality} 
+	\subsection*{a) Compute the welfare gains of removing the seasonal component from the stream of consumption separately for each degree of seasonality in Table 1.}
+	
+
+	We first define the permanent level idiosyncratic non-seasonal stochastic component of consumption using the deterministic seasonal component showing in table 1. Then define the Lifetime utility for consumption for different degree of seasonality. After that we define the lifetime utility and finally compute the welfare gains of removing the seasonal component.
+	
+  \begin{Verbatim}[commandchars=\\\{\}]
+   
+   \PY{c+c1}{\PYZsh{}COMPUTE THE WELFARE REMOVING THE SEASONAL COMPONENT}
+   \PY{n}{c\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+   \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{t} \PY{o+ow}{in} \PY{n}{it}\PY{o}{.}\PY{n}{product}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+     \PY{n}{c\PYZus{}t}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{z}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{c}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}       
+            
+     \PY{n}{a1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}   
+     \PY{n}{welfare1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}         
+     \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+         \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{a1}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β2}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{o}{*}\PY{n}{c\PYZus{}t}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+                    
+             \PY{n}{welfare1}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β1}\PY{p}{[}\PY{n}{t}\PY{p}{]}\PY{o}{*}\PY{n}{a1}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+        
+     \PY{c+c1}{\PYZsh{}Total welfare}
+     \PY{n}{total\PYZus{}h}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}h}\PY{p}{)}  
+     \PY{n}{total\PYZus{}l}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}l}\PY{p}{)}
+     \PY{n}{total\PYZus{}m}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}m}\PY{p}{)}
+     \PY{n}{total\PYZus{}ns}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare1}\PY{p}{)}
+        
+     \PY{c+c1}{\PYZsh{}Find the Welfare gains            }
+     \PY{n}{g\PYZus{}h}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare1}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}h}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+     \PY{n}{g\PYZus{}m}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare1}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}m}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+     \PY{n}{g\PYZus{}l}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare1}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}l}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+     \PY{n}{g\PYZus{}total\PYZus{}h}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}ns}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}h}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+     \PY{n}{g\PYZus{}total\PYZus{}m}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}ns}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}m}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+     \PY{n}{g\PYZus{}total\PYZus{}l}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}ns}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}l}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+     \PY{n}{xx}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{g\PYZus{}m}\PY{p}{)}
+        
+ 
+\end{Verbatim}
+
+The total welfare associated with each degree of seasonality and the welfare gains after removing the seasonal component is showing in the following table. We can see that the higher seasonality degree the higher welfare gains however the total welfare decreased with the seasonality degree.Because of the form of the utility function all households get the same welfare gain after removing the seasonal component of consumption.\\
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Table1:}                    Low  Medium     High Non-season
+        Welfare        -162.94  -190.0  -245.36    -135.47
+        Welfare gains     0.07    0.15     0.32          -
+\end{Verbatim}
+            
+\subsection*{b) Compute the welfare gains of removing the nonseasonal consumption risk}
+Now we remove the idiosyncratic non-stationary stochastic component of the consumption (we called c in the previous code).
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}} \PY{n}{c} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+    \PY{n}{c\PYZus{}mt\PYZus{}middle} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{M}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t} \PY{o+ow}{in} \PY{n}{it}\PY{o}{.}\PY{n}{product}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+       \PY{n}{c\PYZus{}mt\PYZus{}middle}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{z}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{g\PYZus{}middle}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{n}{c}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+        
+    \PY{n}{c\PYZus{}mt\PYZus{}high} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{M}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t} \PY{o+ow}{in} \PY{n}{it}\PY{o}{.}\PY{n}{product}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{n}{c\PYZus{}mt\PYZus{}high}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{z}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{g\PYZus{}high}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{n}{c}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+        
+    \PY{n}{c\PYZus{}mt\PYZus{}low} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{M}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t} \PY{o+ow}{in} \PY{n}{it}\PY{o}{.}\PY{n}{product}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{n}{c\PYZus{}mt\PYZus{}low}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{z}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{g\PYZus{}low}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{n}{c}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+            
+    \PY{c+c1}{\PYZsh{}LIFETIME UTILITY}
+    \PY{n}{w}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{M}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+    \PY{n}{β1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+        \PY{n}{β1}\PY{p}{[}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n+nb}{pow}\PY{p}{(}\PY{n}{β}\PY{p}{,}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{12}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{t}\PY{o}{*}\PY{l+m+mi}{12}\PY{p}{)}
+    \PY{n}{total\PYZus{}β1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β1}\PY{p}{)}  
+          
+    \PY{n}{β2}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+        \PY{n}{β2}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{o}{=}\PY{n+nb}{pow}\PY{p}{(}\PY{n}{β}\PY{p}{,}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{12}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+    \PY{n}{total\PYZus{}β2}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β2}\PY{p}{)}
+        
+    \PY{n}{a\PYZus{}mc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}   
+    \PY{n}{welfare\PYZus{}mc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}         
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+                \PY{n}{a\PYZus{}mc}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β2}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{o}{*}\PY{n}{c\PYZus{}mt\PYZus{}middle}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+                    
+            \PY{n}{welfare\PYZus{}mc}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β1}\PY{p}{[}\PY{n}{t}\PY{p}{]}\PY{o}{*}\PY{n}{a\PYZus{}mc}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+        
+    \PY{n}{a\PYZus{}hc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}   
+    \PY{n}{welfare\PYZus{}hc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}         
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+                \PY{n}{a\PYZus{}hc}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β2}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{o}{*}\PY{n}{c\PYZus{}mt\PYZus{}high}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+                    
+            \PY{n}{welfare\PYZus{}hc}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β1}\PY{p}{[}\PY{n}{t}\PY{p}{]}\PY{o}{*}\PY{n}{a\PYZus{}hc}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+            
+    \PY{n}{a\PYZus{}lc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}   
+    \PY{n}{welfare\PYZus{}lc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}         
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+                \PY{n}{a\PYZus{}lc}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β2}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{o}{*}\PY{n}{c\PYZus{}mt\PYZus{}low}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+                    
+            \PY{n}{welfare\PYZus{}lc}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β1}\PY{p}{[}\PY{n}{t}\PY{p}{]}\PY{o}{*}\PY{n}{a\PYZus{}lc}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+        
+    \PY{n}{total\PYZus{}hc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}hc}\PY{p}{)}  
+    \PY{n}{total\PYZus{}lc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}lc}\PY{p}{)}
+    \PY{n}{total\PYZus{}mc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}mc}\PY{p}{)}
+        
+    \PY{n}{g\PYZus{}hc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare\PYZus{}hc}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}h}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+    \PY{n}{g\PYZus{}mc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare\PYZus{}mc}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}m}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+    \PY{n}{g\PYZus{}lc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare\PYZus{}lc}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}l}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+    \PY{n}{g\PYZus{}total\PYZus{}hc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}hc}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}h}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+    \PY{n}{g\PYZus{}total\PYZus{}mc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}mc}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}m}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+    \PY{n}{g\PYZus{}total\PYZus{}lc}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}lc}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}l}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+        
+\PY{n}{ar}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n+nb}{round}\PY{p}{(}\PY{n}{total\PYZus{}l}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{n+nb}{round}\PY{p}{(}\PY{n}{total\PYZus{}m}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{total\PYZus{}h}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n+nb}{round}\PY{p}{(}\PY{n}{total\PYZus{}lc}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{n+nb}{round}\PY{p}{(}\PY{n}{total\PYZus{}mc}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{total\PYZus{}hc}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n+nb}{round}\PY{p}{(}
+\PY{n}{g\PYZus{}total\PYZus{}lc}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{n+nb}{round}\PY{p}{(}\PY{n}{g\PYZus{}total\PYZus{}mc}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{n+nb}{round}\PY{p}{(}\PY{n}{g\PYZus{}total\PYZus{}hc}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{T2}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{array1}\PY{p}{,} \PY{n}{index} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Welfare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Welfare Non\PYZhy{}Risk}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Welfare Gains}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Low}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Medium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{High}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{T2}
+\end{Verbatim}
+
+\textbf{Table 2} shows us welfare after removing the non-seasonal risk from the consumption. The degree is a cost for welfare so the higher degree of seasonality lower the welfare is. Welfare gains
+are equal for all the degree of seasonality because we removing same amount for each degree of seasonality. 
+Notice that the welfare gains are normal distributed across degree of seasonality, however, the distribution of welfare across households is not homogeneous anymore when comes to households.
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Table2}                      Low  Medium    High
+       Welfare          -162.94 -190.41 -245.36
+       Welfare Non-Risk  -96.43 -123.91 -178.86
+       Welfare Gains       0.18    0.18    0.18
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+\textbf{c) Comparison Table 1 - 2}
+The results from these two tables are the same the seasonality is a cost for welfare therefore, after removing the seasonality component the welfare equally increased across households. After removing the non-seasonal risk welfare increases too but is heterogeneously distributed across household and homogeneously across seasons.
+
+\subsection*{Add stochastic seasonal component}
+This part the process is similar as before, we add the stochastic seasonal component.
+\subsection*{a) Welfare gains of removing the seasonal component}
+
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        \PY{c+c1}{\PYZsh{}Welfare gains of removing the seasonal component (same as 1.1.)}
+        \PY{c+c1}{\PYZsh{}COMPUTE THE OF WELFARE REMOVING THE SEASONAL COMPONENT}
+        \PY{n}{c\PYZus{}t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{t} \PY{o+ow}{in} \PY{n}{it}\PY{o}{.}\PY{n}{product}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{c\PYZus{}t}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{z}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{c}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}       
+            
+        \PY{n}{a1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{)}   
+        \PY{n}{welfare1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}         
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{a1}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β2}\PY{p}{[}\PY{n}{m}\PY{p}{]}\PY{o}{*}\PY{n}{c\PYZus{}t}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+                    
+                \PY{n}{welfare1}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{β1}\PY{p}{[}\PY{n}{t}\PY{p}{]}\PY{o}{*}\PY{n}{a1}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{t}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Total welfare}
+        \PY{n}{total\PYZus{}h}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}h}\PY{p}{)}  
+        \PY{n}{total\PYZus{}l}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}l}\PY{p}{)}
+        \PY{n}{total\PYZus{}m}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare\PYZus{}m}\PY{p}{)}
+        \PY{n}{total\PYZus{}ns}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{welfare1}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Find the Welfare gains            }
+        \PY{n}{g\PYZus{}h}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare1}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}h}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{g\PYZus{}m}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare1}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}m}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{g\PYZus{}l}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{welfare1}\PY{o}{\PYZhy{}}\PY{n}{welfare\PYZus{}l}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{g\PYZus{}total\PYZus{}h}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}ns}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}h}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+        \PY{n}{g\PYZus{}total\PYZus{}m}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}ns}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}m}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+        \PY{n}{g\PYZus{}total\PYZus{}l}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{p}{(}\PY{n}{total\PYZus{}ns}\PY{o}{\PYZhy{}}\PY{n}{total\PYZus{}l}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{total\PYZus{}β2}\PY{o}{*}\PY{n}{total\PYZus{}β1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\end{Verbatim}
+
+\textbf{Table 3} Shows us the similar results as before that the higher the volatility the lower the total
+welfare in all cases, however, after removing the seasonal component results the lower utility meaning that without seasonality is not good. The higher welfare gains come for the higher seasonality degree.The individual distribution of gains is homogeneous. The emergent property holds.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Table 3:}                   Low  Medium     High Non-Season.
+        Welfare        -71.82  -109.0  -117.47     -135.47
+        Welfare gains   -0.15   -0.06    -0.04           -
+\end{Verbatim}
+            
+\subsection*{b) Welfare gains of removing the nonseasonal idiosyncratic consumption risk.}
+
+
+\textbf{Table 4} shows us the results after removing the non-seasonal idiosyncratic risk from the consumption process.
+The similar result as before, welfare is negatively correlated with the degree of seasonality. The welfare gains are homogeneously distributed across degrees of seasonality.
+Notice that in this case the distribution of welfare across households is not homogeneous anymore, even though it is homogeneous across degrees of seasonality.
+Welfare gains are normally distributed.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Table 4:}                     Low  Medium    High
+         Welfare          -71.82 -109.11 -117.47
+         Welfare Non-Risk  -5.32  -42.60  -50.96
+         Welfare Gains      0.18    0.18    0.18
+\end{Verbatim}
+            
+   
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+\section*{Question 2. Adding Seasonal Labor Supply}
+
+Comments about the labour process and the calibration of $\kappa$
+
+We have imposed the exactly same process for labour as for consumption, but assuming a slightly higher standard deviation $(\sigma_L=0.3).$
+We calibrate $\kappa$ fixing it equal to 1.62. This number is the result of the following procedure:
+
+i) Set up the household i program and take FOC. Combine labour and consumption FOC and get:\\
+
+$$\kappa h_{m,t}c_{m,t} = w_t $$
+
+
+which is the usual intratemporal condition. Solving it for $\kappa$ one gets:
+
+
+$$\kappa=\frac{w_t}{h_{m,t}c_{m,t}}$$
+
+
+ii) Impute values for w, h, c and recover $\kappa$. We normalize w to 1; h, c we're computed as the average value across households, years and months. 
+
+
+a)Assume a deterministic seasonal component and a stochastic seasonal component for labor supply both of which are highly positively correlated with their consumption counterparts. Then, compute the welfare gains of removing seasons isolating the effects of consumption and leisure. 
+
+
+- Deterministic seasonal component: picked from the low degree of seasonality of new table1. 
+- Stochastic seasonal component: picked from the low of table2. 
+
+They both have a high positive correlation. 
+
+
+
+We've solved the problem for a medium degree of seasonality in consumption, and a single degree of seasonality in labour. To solve for other degrees, just copy paste changing the vectors g and s.
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:}                                  
+         Welfare                   -541.40
+         Welfare Non-Seasonality C -540.31
+         Welfare Non-Seasonality   -991.83
+         Welfare gains C              0.00
+         Welfare gains L             -0.68
+         Total Welfare Gains         -0.68
+\end{Verbatim}
+            
+    With the previous calibration of \(\kappa\), all the gains comes from removing the seasonal component of labour. Notice that this is because \(\kappa\) is quite high and overwheights the role of labour in the utility. Notice also that the welfare decreases when we remove the seasonality of labour. Now we repeat the exercise setting \(\kappa\)=0.03.Then we get the following table.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:}                                  
+         Welfare                   -158.91
+         Welfare Non-Seasonality C -154.61
+         Welfare Non-Seasonality   -168.55
+         Welfare gains C              0.01
+         Welfare gains L             -0.03
+         Total Welfare Gains         -0.02
+\end{Verbatim}
+            
+This table highlights a very interesting point: removing the seasonality from consumption is welfare-improving whereas removing it from labour is not. Thus, the total gains are negative, but there is a consumption labour trade-off. This is why the decomposition is important.
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The distribution of welfare gains is not homogenous. Note that the
+welfare gains coming from non-seasonal consumption are skewed to the
+right whereas they are skewed to the left for non-seasonality in labour
+and overall.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Assume a deterministic seasonal component and a stochastic seasonal
+  component for labor supply both of which are highly \textbf{negatively
+  correlated} with their consumption counterparts. Then, compute the
+  welfare gains of removing seasons isolating the effects of consumption
+  and leisure.
+\end{enumerate}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:}                                  
+         Welfare                   -177.40
+         Welfare Non-Seasonality C -173.25
+         Welfare Non-Seasonality   -168.55
+         Welfare gains C              0.01
+         Welfare gains L              0.01
+         Total Welfare Gains          0.02
+\end{Verbatim}
+            
+    \textbf{Table 6}
+
+With negative correlated seasonal components the results are quite
+different: - Removing consumption seasonality is welfare improving but
+now also removing labour seasonality is. - Overall welfare gains are
+positive. - Welfare gains are equally distributed between the
+consumption and labour components. The trade-off identified before
+disappears.
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The distribution of gains across agents is much less skewed than before.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  How do your answers to (a) and (b) change if the nonseasonal
+  stochastic component of consumption and leisure are correlated?
+\end{enumerate}
+
+They follow exactly the same process \((Normal (0, \sigma)\), with
+different sigmas. As a consequence, they are already positively
+correlated.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
